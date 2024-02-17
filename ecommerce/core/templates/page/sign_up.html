@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<p> voce precisa estar deslogado para criar uma nova conta </p>
+{% else %}
+    <div class="w-1/2 my-6 mx-auto p-6 bg-yellow-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">Sign Up</h1>
+        <form action="" method='post'>
+            {% csrf_token %}
+            <div id="form-group mb-2">
+                {{ form.username.errors }}
+                <label for="">Username:</label> <br>
+                {{ form.username }}
+            </div>
+            <div id="form-group mb-2">
+                {{ form.email.errors }}
+                <label for="">Email:</label> <br>
+                {{ form.email }}
+            </div>
+            <div id="form-group mb-2">
+                {{ form.password1.errors }}
+                <label for="">Password:</label> <br>
+                {{ form.password1 }}
+            </div>
+            <div id="form-group mb-2">
+                {{form.password2.errors}}
+                <label for="">Password confirmation </label> <br>
+                {{form.password2}}
+            </div>
+           <input type="submit"  class="bg-gray-500 p-3 text-black-200 rounded-xl hover:bg-gray-900 text-white " value="Send">
+        </form>
+    </div>
+
+{% endif %}
+{% endblock content %}

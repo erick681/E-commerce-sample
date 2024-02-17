@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ item.name }} Details 
+{% endblock title %}
+{% block content %}
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3">
+        <img src="{{ item.photo.url }}" alt="{{ item.name }}" class="rounded-xl">
+    </div>
+    <div class="col-span-2 p-6 bg-gray-300 rounded-xl">
+        <h1 class="mb-text-3xl text-4xl"> {{ item.name }} </h1>
+        <p class="text-gray-500"> <strong> Price </strong>{{ item.price }}</p>
+        <p class="text-gray-500"> <strong> Seller </strong>{{ item.created_by.username }}</p>
+        <br>
+        {% if item.description %}
+        <p class="text-gray-700">
+            <strong class="text-rgay-500">Description </strong><br>
+            {{ item.description }}
+        </p>
+        {% endif %}
+        {% if request.user == item.created_by %}
+        <div class="mt-6 p-6 bg-white rounded-xl">Item  Created By You </div>
+        <a href="{% url 'item:delete' item.id %}" class="inline-block bg-green-500 p-6 rounded-xl text-lg font-semibold px-6 py-3 mt-6 hover:bg-green-300">Delete</a>
+        <a href="{% url 'item:edit' item.id %}" class="inline-block bg-orange-500 p-6 rounded-xl text-lg font-semibold px-6 py-3 mt-6 hover:bg-orange-700">Edit</a>
+        {% else %}
+        <a href="" class="inline-block rounded-xl px-6 py-5 bg-gray-500 text-white mt-5 font-semibold hover:bg-gray-700 text-white-300">Contact Seller</a>
+        {% endif %}
+    </div>
+</div>
+<div class="mt-6 px-7 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Related items</h2>
+
+    <div class="grid grid-cols-3 gap-5">
+        {% for item in related_items %}
+        <div>
+            <a href="{% url 'item:details' item.id %}">
+                <div>
+                    <img src="{{ item.photo.url }}" alt="{{ item.name }}" class="rounded-t-xl">
+                </div>
+
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="text-2xl">
+                        {{ item.name }}
+                    </h2>
+                    <p class="text-gray-500">
+                        {{ item.price }}
+                    </p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

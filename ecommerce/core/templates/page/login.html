@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>
+    Voce não precisa acessar a pagina de login voce ja está autenticado como 
+    {{ user.username }}
+</h1>
+{% else %}
+    <div class="w-1/2 my-6 mx-auto p-6 bg-yellow-100 rounded-xl">
+    <h1 class="mb-6 text-3xl">Log into your account </h1>
+    <form action="" method='post'>
+        {% csrf_token %}
+        <div id="form-group mb-2">
+            {{ form.username.errors }}
+            <label for="">Username:</label> <br>
+            {{ form.username }}
+        </div>
+        <div id="form-group mb-2">
+            {{ form.email.errors }}
+            <label for="">Email:</label> <br>
+            {{ form.email }}
+        </div>
+        <div id="form-group mb-2">
+            {{ form.password.errors }}
+            <label for="">Password:</label> <br>
+            {{ form.password }}
+        </div>
+    <input type="submit"  class="bg-gray-500 p-3 text-black-200 rounded-xl hover:bg-gray-900 text-white " value="Send">
+    </form>
+    </div>
+{% endif %}
+{% endblock content %}
+   
